@@ -1,5 +1,5 @@
 {
-  "name": "floor12/yii2-default-behavior",
+  "name": "floor12/yii2-behavior-default",
   "description": "Yii2 to update models in bootstrap modals",
   "type": "yii2-extension",
   "minimum-stability": "stable",
