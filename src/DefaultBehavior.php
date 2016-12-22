@@ -6,7 +6,7 @@
  * Time: 19:36
  */
 
-namespace floor12\default-behavior;
+namespace floor12\defaultbehavior;
 
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
