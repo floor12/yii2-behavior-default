@@ -17,27 +17,34 @@ class DefaultBehavior extends Behavior
     public $update_user_id = 'update_user_id';
     public $created = 'created';
     public $updated = 'updated';
-    public $force_user = false;
 
     public function events()
     {
         return [
+            ActiveRecord::EVENT_BEFORE_VALIDATE => 'fillData',
             ActiveRecord::EVENT_BEFORE_INSERT => 'saveCreator',
             ActiveRecord::EVENT_BEFORE_UPDATE => 'saveUpdator'
         ];
     }
 
+    public function fillData()
+    {
+        if ($this->owner->isNewRecord)
+            $this->owner->{$this->created} = time();
+        $this->owner->{$this->updated} = time();
+    }
+
     public function saveCreator()
     {
-        $this->owner->{$this->create_user_id} = $this->force_user ? $this->force_user : \Yii::$app->user->id;
+        $this->owner->{$this->create_user_id} = \Yii::$app->user->id;
         $this->owner->{$this->created} = time();
-        $this->owner->{$this->update_user_id} = $this->force_user ? $this->force_user : \Yii::$app->user->id;
+        $this->owner->{$this->update_user_id} = \Yii::$app->user->id;
         $this->owner->{$this->updated} = time();
     }
 
     public function saveUpdator()
     {
-        $this->owner->{$this->update_user_id} = $this->force_user ? $this->force_user : \Yii::$app->user->id;
+        $this->owner->{$this->update_user_id} = \Yii::$app->user->id;
         $this->owner->{$this->updated} = time();
     }
 
