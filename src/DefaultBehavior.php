@@ -36,15 +36,20 @@ class DefaultBehavior extends Behavior
 
     public function saveCreator()
     {
-        $this->owner->{$this->create_user_id} = \Yii::$app->user->id;
+        if (isset(\Yii::$app->user)) {
+            $this->owner->{$this->create_user_id} = \Yii::$app->user->id;
+            $this->owner->{$this->update_user_id} = \Yii::$app->user->id;
+        }
+
         $this->owner->{$this->created} = time();
-        $this->owner->{$this->update_user_id} = \Yii::$app->user->id;
         $this->owner->{$this->updated} = time();
     }
 
     public function saveUpdator()
     {
-        $this->owner->{$this->update_user_id} = \Yii::$app->user->id;
+        if (isset(\Yii::$app->user))
+            $this->owner->{$this->update_user_id} = \Yii::$app->user->id;
+
         $this->owner->{$this->updated} = time();
     }
 
